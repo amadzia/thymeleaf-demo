@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/css/bootstrap.min.css"
@@ -32,7 +34,7 @@
             line-height: 1.42857;
         }
 
-        .row {
+        .form-row {
             margin-left: -15px;
             margin-right: -15px;
         }
@@ -133,38 +135,59 @@
 </head>
 <body>
 
-<div class="jumbotron">
+<div class="jumbotron" th:replace="fragments/jumbotron :: jumbotron">
     <div class="container">
         <h1>Spring Framework Guru</h1>
         <p class="lead" th:text="#{index.courses.tagline}">Courses for Spring Framework</p>
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
+<div class="container" style="height: 100vh;">
+    <div class="form-row">
         <div class="col-md-12">
-            <h1>Spring Framework Guru - Course Name</h1>
+            <h1 th:text="${product.courseName}">Spring Framework Guru - Course Name</h1>
         </div>
     </div>
-    <div class="row">
+    <div class="form-row course-listing">
         <div class="col-md-6">
-
-            <img src="../static/images/SpringIntroThumb.png"
-                 th:src="@{images/SpringIntroThumb.png}"
-                 class="center-block">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <img src="../static/images/SpringIntroThumb.png"
+                         th:src="@{'/images/'+${product.imageUrl}}"
+                         class="center-block"/>
+                </div>
+            </div>
+            <div class="form-row course-listing-extra-info col-xs-12">
+                <div class="col-xs-8">
+                    <img align="left" alt="John Thompson"
+                         src="../static/images/instructor_jt.jpg"
+                         th:src="@{'/images/'+${product.author.image}}"
+                         class="rounded-circle"/>
+                    <div class="small course-author-name" th:text="${(product.author.firstName)
+                                                          + ' ' + (product.author.lastName)}">
+                        Author Name
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="small course-price" th:text="${product.price > 0 ? '$' + product.price : 'FREE'}">
+                        $PRICE
+                    </div>
+                </div>
+            </div>
 
         </div>
         <div class="col-md-6">
             <div>
-                <h2>Course Title</h2>
-                <p>Lorem ipsum dolor sit amet, vel ut nemore denique adversarium. Eam persius perfecto eu.
+                <h2 th:text="${product.courseSubtitle}">Course Title</h2>
+                <p th:text="${product.courseDescription}">Lorem ipsum dolor sit amet, vel ut nemore denique adversarium.
+                    Eam persius perfecto eu.
                     Liber gloriatur mea ea, sea ad modus scriptorem liberavisse. Duo ex harum quodsi.
                     Vix liber errem ne, mea summo fierent no. </p>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="form-row">
         <div class="col-md-offset-6 col-md-4">
             <button class="btn-success" th:text="#{button.buy.now}">Buy Now!</button>
         </div>
